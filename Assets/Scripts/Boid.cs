@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Boid : MonoBehaviour
 {
+    public GameObject waypoint;
+
     [Header("Set Dynamically")]
     public Rigidbody rigid;
 
@@ -45,7 +47,17 @@ public class Boid : MonoBehaviour
         set { transform.position = value; }
     }
 
-    void FixedUpdate()
+    public void LazyFlight()
+    {
+
+    }
+    
+    public void CircleATree()
+    {
+
+    }
+
+    public void FollowTheLeader()
     {
         Vector3 vel = rigid.velocity;
         Spawner spn = Spawner.S;
