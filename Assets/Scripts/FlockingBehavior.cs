@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.SceneManagement;
 
 public class FlockingBehavior : MonoBehaviour
 {
@@ -56,19 +57,20 @@ public class FlockingBehavior : MonoBehaviour
             GUI.Label(new Rect((dropDownRect.x - 95), dropDownRect.y, 300, 25), modes[indexNumber]);
             if (indexNumber == 0)
             {
-                boid.LazyFlight();
+                //boid.LazyFlight();
                 Debug.Log("Lazy Flight");
             }
 
             if (indexNumber == 1)
             {
-                boid.CircleATree();
+                //boid.CircleATree();
                 Debug.Log("Circle a Tree");
             }
 
             if (indexNumber == 2)
             {
-                boid.FollowTheLeader();
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                //boid.FollowTheLeader();
                 Debug.Log("Follow the Leader");
             }
 

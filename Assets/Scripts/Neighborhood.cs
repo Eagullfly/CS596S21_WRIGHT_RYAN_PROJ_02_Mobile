@@ -57,7 +57,7 @@ public class Neighborhood : MonoBehaviour
 
             for(int i=0; i<neighbors.Count; i++)
             {
-                avg += neighbors[i].pos;
+                //avg += neighbors[i].pos;
             }
             avg /= neighbors.Count;
 
@@ -74,7 +74,7 @@ public class Neighborhood : MonoBehaviour
 
             for(int i=0; i<neighbors.Count; i++)
             {
-                avg += neighbors[i].rigid.velocity;
+                //avg += neighbors[i].rigid.velocity;
             }
             avg /= neighbors.Count;
 
@@ -91,12 +91,12 @@ public class Neighborhood : MonoBehaviour
             int nearCount = 0;
             for(int i=0; i<neighbors.Count; i++)
             {
-                delta = neighbors[i].pos - transform.position;
+                /*delta = neighbors[i].pos - transform.position;
                 if(delta.magnitude <= Spawner.S.collDist)
                 {
                     avg += neighbors[i].pos;
                     nearCount++;
-                }
+                }*/
             }
 
             if(nearCount == 0)

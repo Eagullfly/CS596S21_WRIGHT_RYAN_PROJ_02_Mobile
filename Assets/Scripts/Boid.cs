@@ -4,130 +4,40 @@ using UnityEngine;
 
 public class Boid : MonoBehaviour
 {
-    public GameObject waypoint;
+    [SerializeField]
+    private FlockController flockController;
 
-    [Header("Set Dynamically")]
-    public Rigidbody rigid;
+    private Vector3 targetDirection;
 
-    private Neighborhood neighborhood;
-    void Awake()
+    private Vector3 direction;
+
+    public FlockController FlockController
     {
-        neighborhood = GetComponent<Neighborhood>();
-        rigid = GetComponent<Rigidbody>();
-
-        pos = Random.insideUnitSphere * Spawner.S.spawnRadius;
-
-        Vector3 vel = Random.onUnitSphere * Spawner.S.velocity;
-        rigid.velocity = vel;
-
-        LookAhead();
-
-        Color randColor = Color.black;
-        while(randColor.r + randColor.g + randColor.b < 1.0f)
-        {
-            randColor = new Color(Random.value, Random.value, Random.value);
-        }
-        Renderer[] rends = gameObject.GetComponentsInChildren<Renderer>();
-        foreach (Renderer r in rends)
-        {
-            r.material.color = randColor;
-        }
-        TrailRenderer tRend = GetComponent<TrailRenderer>();
-        tRend.material.SetColor("_TintColor", randColor);
+        get { return flockController; }
+        set { flockController = value; }
     }
 
-    void LookAhead()
+    public Vector3 Direction { get { return direction; } }
+
+    private void Awake()
     {
-        transform.LookAt(pos + rigid.velocity);
+        direction = transform.forward.normalized;
+        if(flockController != null)
+        {
+            Debug.LogError("You must assign a flock controller!");
+        }
     }
 
-    public Vector3 pos
+    private void Update()
     {
-        get { return transform.position; }
-        set { transform.position = value; }
-    }
-
-    public void LazyFlight()
-    {
-
-    }
-    
-    public void CircleATree()
-    {
-
-    }
-
-    public void FollowTheLeader()
-    {
-        Vector3 vel = rigid.velocity;
-        Spawner spn = Spawner.S;
-
-        Vector3 velAvoid = Vector3.zero;
-        Vector3 tooClosePos = neighborhood.avgClosePos;
-
-        if(tooClosePos != Vector3.zero)
+        targetDirection = FlockController.Flock(this, transform.localPosition, direction);
+        if(targetDirection == Vector3.zero)
         {
-            velAvoid = pos = tooClosePos;
-            velAvoid.Normalize();
-            velAvoid *= spn.velocity;
+            return;
         }
-
-        Vector3 velAlign = neighborhood.avgVel;
-
-        if(velAlign != Vector3.zero)
-        {
-
-            velAlign.Normalize();
-
-            velAlign *= spn.velocity;
-        }
-
-        Vector3 velCenter = neighborhood.avgPos;
-        if(velCenter != Vector3.zero)
-        {
-            velCenter -= transform.position;
-            velCenter.Normalize();
-            velCenter *= spn.velocity;
-        }
-
-        Vector3 delta = Attractor.POS - pos;
-
-        bool attracted = (delta.magnitude > spn.attractPushDist);
-        Vector3 velAttract = delta.normalized * spn.velocity;
-
-        float fdt = Time.fixedDeltaTime;
-        if(velAvoid != Vector3.zero)
-        {
-            vel = Vector3.Lerp(vel, velAvoid, spn.collAvoid * fdt);
-        }
-        else
-        {
-            if(velAlign != Vector3.zero)
-            {
-                vel = Vector3.Lerp(vel, velAlign, spn.velMatching * fdt);
-            }
-            if(velCenter != Vector3.zero)
-            {
-                vel = Vector3.Lerp(vel, velAlign, spn.flockCentering * fdt);
-            }
-            if (velAttract != Vector3.zero)
-            {
-                if (attracted)
-                {
-                    vel = Vector3.Lerp(vel, velAttract, spn.attractPull * fdt);
-                }
-                else
-                {
-                    vel = Vector3.Lerp(vel, -velAttract, spn.attractPush * fdt);
-                }
-            }
-        }
-
-        vel = vel.normalized * spn.velocity;
-
-        rigid.velocity = vel;
-
-        LookAhead();
+        direction = targetDirection.normalized;
+        direction *= flockController.SpeedModifier;
+        transform.Translate(Direction * Time.deltaTime);
     }
 
 }
