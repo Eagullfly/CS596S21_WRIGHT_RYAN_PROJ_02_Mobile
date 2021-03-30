@@ -28,6 +28,13 @@ public class FlockController : MonoBehaviour
     [SerializeField]
     private float spawnRadius = 3.0f;
     private Vector3 spawnLocation = Vector3.zero;
+    [SerializeField]
+    private Vector3 boundsMin;
+    [SerializeField]
+    private Vector3 boundsMax;
+    [SerializeField]
+    private float minDistance;
+    
 
     [Header("Target Data")]
     [SerializeField]
@@ -42,12 +49,22 @@ public class FlockController : MonoBehaviour
     private Vector3 separation;
 
     public List<Boid> flockList = new List<Boid>();
+    private string currentMode;
+
+    [Header("Circle A Tree")]
+    private Vector3[] waypoints = new Vector3[12];
+    private int nextWaypoint;
+
+    private Vector3 randomPos;
 
     public float SpeedModifier { get { return speedModifier; } }
 
     private void Awake()
     {
+        float posX, posY, posZ;
+
         flockList = new List<Boid>(flockSize);
+        //target = Transform.Find("target");
         for(int i = 0; i < flockSize; i++)
         {
             spawnLocation = Random.insideUnitSphere * spawnRadius + transform.position;
@@ -56,6 +73,23 @@ public class FlockController : MonoBehaviour
             boid.FlockController = this;
             flockList.Add(boid);
         }
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            posX = Random.Range(boundsMin.x, boundsMax.x);
+            posY = Random.Range(boundsMin.y, boundsMax.y);
+            posZ = Random.Range(boundsMin.z, boundsMax.z);
+
+            waypoints[i] = new Vector3(posX, posY, posZ);
+        }
+
+        nextWaypoint = 0;
+
+        currentMode = "lazy";
+    }
+
+    public string GetMode()
+    {
+        return currentMode;
     }
 
     public Vector3 Flock(Boid boid, Vector3 boidPosition, Vector3 boidDirection)
@@ -91,10 +125,76 @@ public class FlockController : MonoBehaviour
         separation /= flockSize;
         separation = separation.normalized * separationWeight;
 
+        
+        return flockDirection + flockCenter + separation;
+    }
 
-        targetDirection = target.localPosition - boidPosition;
+    public Vector3 getDirection(Boid boid, Vector3 dest)
+    {
+        targetDirection = dest - boid.transform.position;
         targetDirection = targetDirection * followWeight;
 
-        return flockDirection + flockCenter + separation + targetDirection;
+        return targetDirection;
     }
+
+    public Vector3 FollowTarget(Boid boid)
+    {
+        if(target.gameObject.activeSelf == false)
+        {
+            target.gameObject.SetActive(true);
+        }
+        return getDirection(boid, target.localPosition);
+    }
+
+    public Vector3 CircleATree(Boid boid)
+    {
+        target.gameObject.SetActive(false);
+        if((boid.transform.position - waypoints[nextWaypoint]).magnitude <= minDistance)
+        {
+            nextWaypoint++;
+            if(nextWaypoint >= 12)
+            {
+                nextWaypoint = 0;
+            }
+        }
+
+        return getDirection(boid, waypoints[nextWaypoint]);
+    }
+
+    public Vector3 LazyFlight(Boid boid)
+    {
+        target.gameObject.SetActive(false);
+        if((boid.transform.position - randomPos).magnitude <= minDistance)
+        {
+            randomPos = getRandomPos();
+        }
+
+        return getDirection(boid, randomPos);
+    }
+
+    Vector3 getRandomPos()
+    {
+        float x = Random.Range(boundsMin.x, boundsMax.x);
+        float y = Random.Range(boundsMin.y, boundsMax.y);
+        float z = Random.Range(boundsMin.z, boundsMax.z);
+
+        return new Vector3(x, y, z);
+    }
+
+    public void setLazy()
+    {
+        currentMode = "lazy";
+        randomPos = getRandomPos();
+    }
+
+    public void setCircle()
+    {
+        currentMode = "circle";
+    }
+
+    public void setFollow()
+    {
+        currentMode = "follow";
+    }
+
 }

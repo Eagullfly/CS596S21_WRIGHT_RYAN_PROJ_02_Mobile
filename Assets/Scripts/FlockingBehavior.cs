@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.SceneManagement;
+
 
 public class FlockingBehavior : MonoBehaviour
 {
-    Boid boid;
+    FlockController flock;
+
+    //public Transform[] targets;
+
     Vector2 scrollViewVector = Vector2.zero;
     public Rect dropDownRect = new Rect(125, 50, 125, 300);
     public static string[] modes = { "Lazy Flight", "Circle a Tree", "Follow the Leader" };
@@ -15,7 +18,8 @@ public class FlockingBehavior : MonoBehaviour
 
     void Start()
     {
-        boid = GetComponentInChildren<Boid>();
+        
+        flock = GetComponent<FlockController>();
     }
 
     void OnGUI()
@@ -57,21 +61,23 @@ public class FlockingBehavior : MonoBehaviour
             GUI.Label(new Rect((dropDownRect.x - 95), dropDownRect.y, 300, 25), modes[indexNumber]);
             if (indexNumber == 0)
             {
-                //boid.LazyFlight();
-                Debug.Log("Lazy Flight");
+                flock.setLazy();
+                //flock.target = targets[0];
+                //Debug.Log("Lazy Flight");
             }
 
             if (indexNumber == 1)
             {
-                //boid.CircleATree();
-                Debug.Log("Circle a Tree");
+                flock.setCircle();
+                //flock.target = WayPointManager.points[0];
+                //Debug.Log("Circle a Tree");
             }
 
             if (indexNumber == 2)
             {
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                //boid.FollowTheLeader();
-                Debug.Log("Follow the Leader");
+                flock.setFollow();
+                //flock.target = targets[1];
+                //Debug.Log("Follow the Leader");
             }
 
         }

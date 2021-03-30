@@ -10,6 +10,7 @@ public class Boid : MonoBehaviour
     private Vector3 targetDirection;
 
     private Vector3 direction;
+    private string currentMode; 
 
     public FlockController FlockController
     {
@@ -26,11 +27,26 @@ public class Boid : MonoBehaviour
         {
             Debug.LogError("You must assign a flock controller!");
         }
+        currentMode = null;
     }
 
     private void Update()
     {
         targetDirection = FlockController.Flock(this, transform.localPosition, direction);
+
+        if(flockController.GetMode() == "follow")
+        {
+            targetDirection += FlockController.FollowTarget(this);
+        }
+        else if (flockController.GetMode() == "circle")
+        {
+            targetDirection = FlockController.CircleATree(this);
+        }
+        else if (flockController.GetMode() == "lazy")
+        {
+            targetDirection = FlockController.LazyFlight(this);
+        }
+
         if(targetDirection == Vector3.zero)
         {
             return;
@@ -40,4 +56,12 @@ public class Boid : MonoBehaviour
         transform.Translate(Direction * Time.deltaTime);
     }
 
+    public void ToggleCircle()
+    {
+        currentMode = "circle";
+    }
+    public void ToggleLazy()
+    {
+        currentMode = "lazy";
+    }
 }
