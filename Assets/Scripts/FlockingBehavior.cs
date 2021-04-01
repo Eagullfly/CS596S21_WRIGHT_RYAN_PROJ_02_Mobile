@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FlockingBehavior : MonoBehaviour
 {
-    FlockController flock;
+    public FlockController flock;
 
     //public Transform[] targets;
 
@@ -18,8 +18,7 @@ public class FlockingBehavior : MonoBehaviour
 
     void Start()
     {
-        
-        flock = GetComponent<FlockController>();
+        //flock = GameObject.FindGameObjectWithTag("FlockController").GetComponent<FlockController>();
     }
 
     void OnGUI()
@@ -54,11 +53,6 @@ public class FlockingBehavior : MonoBehaviour
                 
                 GUI.Label(new Rect(5, (index * 25), dropDownRect.height, 25), modes[index]);
             }
-            GUI.EndScrollView();
-        }
-        else
-        {
-            GUI.Label(new Rect((dropDownRect.x - 95), dropDownRect.y, 300, 25), modes[indexNumber]);
             if (indexNumber == 0)
             {
                 flock.setLazy();
@@ -79,6 +73,12 @@ public class FlockingBehavior : MonoBehaviour
                 //flock.target = targets[1];
                 //Debug.Log("Follow the Leader");
             }
+            GUI.EndScrollView();
+        }
+        else
+        {
+            GUI.Label(new Rect((dropDownRect.x - 95), dropDownRect.y, 300, 25), modes[indexNumber]);
+            
 
         }
     }

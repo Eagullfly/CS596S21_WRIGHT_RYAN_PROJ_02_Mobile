@@ -95,7 +95,7 @@ public class FlockController : MonoBehaviour
 
         nextWaypoint = 0;
 
-        currentMode = "lazy";
+        //currentMode = "lazy";
     }
 
     public string GetMode()
@@ -153,16 +153,12 @@ public class FlockController : MonoBehaviour
 
     public Vector3 FollowTarget(Boid boid)
     {
-        if (target.gameObject.activeSelf == false)
-        {
-            target.gameObject.SetActive(true);
-        }
         return getDirection(boid, target.localPosition);
     }
 
     public Vector3 CircleATree(Boid boid)
     {
-        target.gameObject.SetActive(false);
+        //target.gameObject.SetActive(false);
         if ((boid.transform.position - waypoints[nextWaypoint]).magnitude <= minDistance)
         {
             nextWaypoint++;
@@ -177,7 +173,7 @@ public class FlockController : MonoBehaviour
 
     public Vector3 LazyFlight(Boid boid)
     {
-        target.gameObject.SetActive(false);
+        //target.gameObject.SetActive(false);
 
         if ((boid.transform.position - randomPos).magnitude <= minDistance)
         {
