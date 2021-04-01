@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Boid : MonoBehaviour
 {
     [SerializeField]
     private FlockController flockController;
 
+    //The modified direction for the boid.
     private Vector3 targetDirection;
-
+    //The Boid's current direction.
     private Vector3 direction;
-    private string currentMode; 
+    private string currentMode;
 
     public FlockController FlockController
     {
@@ -23,7 +22,7 @@ public class Boid : MonoBehaviour
     private void Awake()
     {
         direction = transform.forward.normalized;
-        if(flockController != null)
+        if (flockController != null)
         {
             Debug.LogError("You must assign a flock controller!");
         }
@@ -32,9 +31,10 @@ public class Boid : MonoBehaviour
 
     private void Update()
     {
+
         targetDirection = FlockController.Flock(this, transform.localPosition, direction);
 
-        if(flockController.GetMode() == "follow")
+        if (flockController.GetMode() == "follow")
         {
             targetDirection += FlockController.FollowTarget(this);
         }
@@ -47,19 +47,20 @@ public class Boid : MonoBehaviour
             targetDirection = FlockController.LazyFlight(this);
         }
 
-        if(targetDirection == Vector3.zero)
+        if (targetDirection == Vector3.zero)
         {
             return;
         }
         direction = targetDirection.normalized;
         direction *= flockController.SpeedModifier;
-        transform.Translate(Direction * Time.deltaTime);
+        transform.Translate(direction * Time.deltaTime);
     }
 
     public void ToggleCircle()
     {
         currentMode = "circle";
     }
+
     public void ToggleLazy()
     {
         currentMode = "lazy";
