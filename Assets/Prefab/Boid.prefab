@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8455734221655683049
+--- !u!1 &5417142961883345321
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5069711967859563095}
-  - component: {fileID: 3337448324257580117}
-  - component: {fileID: 6934819769176818148}
-  - component: {fileID: -4558735852314800675}
-  - component: {fileID: 1011331921786131014}
-  - component: {fileID: 6377682575494059588}
+  - component: {fileID: 1218333324394112997}
+  - component: {fileID: 4464300299376280150}
+  - component: {fileID: 8743863463101908671}
+  - component: {fileID: 4383581543979914510}
+  - component: {fileID: 5379915068211784190}
+  - component: {fileID: 6811918106928967485}
   m_Layer: 0
   m_Name: Boid
   m_TagString: Untagged
@@ -21,35 +21,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5069711967859563095
+--- !u!4 &1218333324394112997
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8455734221655683049}
+  m_GameObject: {fileID: 5417142961883345321}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.998503, y: 7.3149247, z: 5.987809}
+  m_LocalPosition: {x: 11.331364, y: 55.294426, z: -26.382774}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3337448324257580117
+--- !u!33 &4464300299376280150
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8455734221655683049}
+  m_GameObject: {fileID: 5417142961883345321}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6934819769176818148
+--- !u!23 &8743863463101908671
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8455734221655683049}
+  m_GameObject: {fileID: 5417142961883345321}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -82,26 +82,26 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &-4558735852314800675
-MonoBehaviour:
+--- !u!135 &4383581543979914510
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8455734221655683049}
+  m_GameObject: {fileID: 5417142961883345321}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc0d559e41ec7fa4499bee2e7d560410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flockController: {fileID: 0}
---- !u!54 &1011331921786131014
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5379915068211784190
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8455734221655683049}
+  m_GameObject: {fileID: 5417142961883345321}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -109,18 +109,18 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 2
---- !u!135 &6377682575494059588
-SphereCollider:
+--- !u!114 &6811918106928967485
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8455734221655683049}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_GameObject: {fileID: 5417142961883345321}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0d559e41ec7fa4499bee2e7d560410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flockController: {fileID: 0}
