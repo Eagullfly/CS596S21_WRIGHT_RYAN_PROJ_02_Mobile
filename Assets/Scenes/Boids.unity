@@ -250,7 +250,7 @@ MonoBehaviour:
   cohesionWeight: 1
   separationWeight: 5
   followWeight: 1
-  prefab: {fileID: -4558735852314800675, guid: e67a1a962b0bbdf46b88be4a5c6bf608, type: 3}
+  prefab: {fileID: 2078418389497613790, guid: 286625236fe573a41b07b23eb130e4e6, type: 3}
   spawnRadius: 3
   boundsMin: {x: -30, y: 1, z: -30}
   boundsMax: {x: 30, y: 31, z: 30}
