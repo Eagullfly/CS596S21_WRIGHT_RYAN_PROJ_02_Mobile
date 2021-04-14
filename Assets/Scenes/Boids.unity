@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75086d2878c02ff4797c44d453bb94fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flockSize: 10
+  flockSize: 8
   speedModifier: 5
   alignmentWeight: 1
   cohesionWeight: 1
