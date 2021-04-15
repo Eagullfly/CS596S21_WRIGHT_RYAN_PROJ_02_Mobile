@@ -26,7 +26,7 @@ public class Boid : MonoBehaviour
         {
             Debug.LogError("You must assign a flock controller!");
         }
-        currentMode = null;
+        
     }
 
     private void Update()
