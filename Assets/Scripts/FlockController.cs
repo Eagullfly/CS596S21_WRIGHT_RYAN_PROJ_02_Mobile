@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FlockController : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class FlockController : MonoBehaviour
     // Weight modifier for the target's contributionto the flocking direction.
     [SerializeField]
     private float followWeight = 5;
+
+    public float alignmentMax = 50;
+    public float cohesionMax = 50;
+    public float separationMax = 50;
 
     [Header("Boid Data")]
     [SerializeField]
@@ -66,6 +71,14 @@ public class FlockController : MonoBehaviour
 
     private Vector3 randomPos;
 
+    public Text alignmentText;
+    public Text cohesionText;
+    public Text separationText;
+
+    public Slider alignmentSlider;
+    public Slider cohesionSlider;
+    public Slider separationSlider;
+
     public float SpeedModifier { get { return speedModifier; } }
 
     private void Awake()
@@ -96,6 +109,26 @@ public class FlockController : MonoBehaviour
         nextWaypoint = 0;
 
         //currentMode = "lazy";
+    }
+
+    private void Start()
+    {
+        alignmentSlider.maxValue = alignmentMax;
+        cohesionSlider.maxValue = cohesionMax;
+        separationSlider.maxValue = separationMax;
+        alignmentSlider.value = 1;
+        cohesionSlider.value = 1;
+        separationSlider.value = 5;
+    }
+
+    private void Update()
+    {
+        alignmentWeight = alignmentSlider.value;
+        cohesionWeight = cohesionSlider.value;
+        separationWeight = separationSlider.value;
+        alignmentText.text = "Alignment: " + alignmentWeight.ToString("0.00");
+        cohesionText.text = "Cohesion: " + cohesionWeight.ToString("0.00");
+        separationText.text = "Separation: " + separationWeight.ToString("0.00");
     }
 
     public string GetMode()
